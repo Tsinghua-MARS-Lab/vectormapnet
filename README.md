@@ -3,7 +3,7 @@
 **VectorMapNet: End-to-end Vectorized HD Map Learning**
 
 
-[Liu Yicheng](https://scholar.google.com/citations?user=vRmsgQUAAAAJ&hl=zh-CN), [Yue Wang](https://people.csail.mit.edu/yuewang/), [Yilun Wang](https://scholar.google.com.hk/citations?user=nUyTDosAAAAJ&hl=en/), [Hang Zhao](http://people.csail.mit.edu/hangzhao/)
+[Yicheng Liu](https://scholar.google.com/citations?user=vRmsgQUAAAAJ&hl=zh-CN), [Yue Wang](https://people.csail.mit.edu/yuewang/), [Yilun Wang](https://scholar.google.com.hk/citations?user=nUyTDosAAAAJ&hl=en/), [Hang Zhao](http://people.csail.mit.edu/hangzhao/)
 
 **[[Paper](https://arxiv.org/submit/4361297/view)] [[Project Page](https://tsinghua-mars-lab.github.io/vecmapnet/)] [[Code](https://github.com/Mrmoore98/VectorMapNet_code)]**
 

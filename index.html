@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<!-- === Header Starts === -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>VectorMapNet</title>
+
+    <link href="./assets/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/font.css" rel="stylesheet" type="text/css">
+    <link href="./assets/style.css" rel="stylesheet" type="text/css">
+    <script src="./assets/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/corpus.js"></script>
+    <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+</head>
+<!-- === Header Ends === -->
+
+<script>
+    var lang_flag = 1;
+</script>
+
+<body>
+
+<!-- === Home Section Starts === -->
+<div class="section">
+    <!-- === Title Starts === -->
+
+    <!-- <div class="logo" style="padding-left: 120pt" align="top">
+        <a href="https://github.com/metadriverse/metadrive" target="_blank">
+            <img style=" width: 450pt;" src="images/metadrive.png">
+        </a>
+    </div> -->
+
+    <div class="header">
+        <div style="" class="title" id="lang">
+            <b>VectorMapNet</b>: End-to-end Vectorized HD Map Learning
+        </div>
+    </div>
+    <!-- === Title Ends === -->
+
+    <div class="author" style="margin-top: -30pt">
+        <a href="https://scholar.google.com/citations?user=vRmsgQUAAAAJ&hl=zh-CN" target="_blank">Liu Yicheng</a><sup>1</sup>,&nbsp;
+        <a href="https://people.csail.mit.edu/yuewang/" target="_blank">Wang Yue</a><sup>3</sup>,&nbsp;
+        <a href="https://scholar.google.com.hk/citations?hl=en&user=nUyTDosAAAAJ">Wang Yilun</a><sup>2</sup>,&nbsp;
+        <a href="https://hangzhaomit.github.io/">Zhao Hang</a><sup>1</sup>&nbsp;
+    </div>
+
+    <div class="institution">
+        <div><sup>1</sup>Tsinghua University,
+            <sup>2</sup>MIT,
+            <sup>3</sup>Li Auto,
+        </div>
+        <div>
+            CoRL 2022 Under Review
+        </div>
+    </div>
+
+    <table border="0" align="center">
+        <tr>
+            <td align="center" style="padding: 0pt 0 15pt 0">
+                <a class="bar" href="https://tsinghua-mars-lab.github.io/VectorMapNet/"><b>Webpage</b></a> |
+                <a class="bar" href="https://github.com/Mrmoore98/VectorMapNet_code"><b>Code</b></a> |
+                <a class="bar" href="https://arxiv.org/submit/4361297/view"><b>Paper</b></a>
+            </td>
+        </tr>
+    </table>
+    
+    <!--<div align="center">
+        <table width="100%" style="margin: 0pt 0pt; text-align: center;">
+            <tr>
+                <td>
+                    <video style="display:block; width:100%; height:auto; "
+                           autoplay="autoplay" muted loop="loop" controls playsinline>
+                        <source src="https://raw.githubusercontent.com/decisionforce/archive/master/MetaDrive/metadrive_teaser.mp4"
+                                type="video/mp4"/>
+                    </video>
+                </td>
+            </tr>
+        </table>
+    </div> -->
+    <p>
+        An end-to-end vectorized HD map generation framework that works with onboard sensor data. 
+        To the best of our knowledge, VectorMapNet is the first work designed toward end-to-end vectorized HD map learning problems.
+        <!-- MUTR3D handles multi-camera 3D detection, and cross-camera, cross-frame objects association in an end-to-end fashion. -->
+    </p>
+    
+</div>
+<!-- === Home Section Ends === -->
+
+<div class="section">
+    <div class="title" id="lang">Abstract</div>
+    <p>
+        Autonomous driving systems require a good understanding of surrounding environments, including moving obstacles and static High-Definition (HD) semantic maps. Existing methods approach the semantic map problem by offline manual annotations, which suffer from serious scalability issues. More recent learning-based methods produce dense rasterized segmentation predictions which do not include instance information of individual map elements and require heuristic post-processing that involves many hand-designed components, to obtain vectorized maps. To that end, we introduce an end-to-end vectorized HD map learning pipeline, termed VectorMapNet. VectorMapNet takes onboard sensor observations and predicts a sparse set of polylines primitives in the bird's-eye view to model the geometry of HD maps. Based on this pipeline, our method can explicitly model the spatial relation between map elements and generate vectorized maps that are friendly for downstream autonomous driving tasks without the need for post-processing. In our experiments, VectorMapNet achieves strong HD map learning performance on nuScenes dataset, surpassing previous state-of-the-art methods by 14.2 mAP. Qualitatively, we also show that VectorMapNet is capable of generating comprehensive maps and capturing more fine-grained details of road geometry. To the best of our knowledge, VectorMapNet is the first work designed toward end-to-end vectorized HD map learning problems.
+    </p>
+    <!-- <ul>
+        <li>
+            <b>Compositional</b>: It supports generating infinite scenes with various road maps and traffic settings for the
+            research of generalizable RL.
+        </li>
+        <li>
+            <b>Lightweight</b>: It is easy to install and run. It can run up to 300 FPS on a standard PC.
+        </li>
+        <li>
+            <b>Realistic</b>: Accurate physics simulation and multiple sensory input including Lidar, RGB images, top-down
+            semantic map and first-person view images. The real traffic data replay is also supported.
+        </li>
+    </ul> -->
+ 
+</div>
+
+<div class="section">
+    <div class="title" id="lang">Motivation</div>
+    <div class="logo" style="" align="center">
+        <img style="width: 700pt;" src="images/teaser_vmp.pdf">
+    </div>
+    <p>
+        Most recent methods consider HD semantic map learning as a semantic segmentation problem in bird's-eye view (BEV), which rasterizes map elements into pixels and assigns each pixel with a class label. This setting makes it straightforward to leverage fully convolutional networks and achieves promising results. However, rasterized maps are not an ideal map representation for autonomous driving for three reasons. First, rasterized maps lack instance information which is necessary to distinguish map elements with the same class label but different semantics, e.g., left lane markings and right lane markings. Second, map elements need a compact representation (e.g., vectorized representation) to ensure that they can be used for downstream tasks like prediction and planning. Nevertheless, it is hard to enforce consistency across pixels within the predicted rasterized map, e.g., nearby lane pixels might have contradicted semantics or geometries. Third, the rasterized map is incompatible with most autonomous driving systems as these systems commonly employ instance-level vectorized representation for HD maps. To predict vectorized representations, HDMapNet generates semantic, instance, and directional maps and vectorizes these three maps with a hand-designed post-processing algorithm. 
+    </p>
+    <p>
+        However, HDMapNet still relies on the rasterized map predictions, and its heuristic post-processing step complicates the pipeline and restricts the model's scalability and performance. In this paper, we propose an end-to-end vectorized HD map learning model called VectorMapNet, which does not generate a dense set of semantic pixels. Instead, we represent map elements as a set of polylines that are easily linked to downstream tasks (e.g., motion forecasting). Therefore, the map learning problem boils down to predicting a sparse set of polylines from sensor observations. We leverage state-of-the-art set prediction and sequence generation methods to generate map elements in three steps: First, VectorMapNet aggregates features generated from different modalities (e.g., camera images and LiDAR) into a common BEV feature space. Then, learnable queries detect map elements' location and build a coarse map layout based on BEV features. Finally, given the coarse layout, we generate the polyline of each map element.
+        We provide an overview of our idea in Figure above. 
+    </p>
+</div>
+
+<div class="section">
+    <div class="title" id="lang">Method</div>
+
+    <p>
+        Our task is to model map elements in the urban environments in a vectorized form using data from onboard sensors, e.g., RGB cameras and/or LiDARs. These map elements include but are not limited to road boundaries, lane dividers, and pedestrian crossings, which are critical for autonomous driving.
+        We formulate this task as a sparse set prediction problem. Specifically, we represent a map \(\mathcal{M}\) by a sparse set of compact vectorized primitives, and the problem is to learn a model that extracts information from sensors to predict a set of vectorized primitives to represent the semantic map. For the vectorized representations, we opt to use \(N\) polylines \(\mathcal{V}^{\mathrm{poly}}=\{V_1^{\mathrm{poly}},\dots,V_N^{\mathrm{poly}}\}\) to represent map elements in the environment. Each polyline \(V^{\mathrm{poly}} = \{v_i\in\mathbb{R}^2| i=1,\dots,N_v\}\) is a collection of \(N_v\) ordered vertices \(v_i\). This setting enables us to model the spatial and topological relations between the map elements and emphasizes the instance characteristic of map elements as well.
+    </p>
+
+    <p>
+        Moreover, using polylines to represent map elements has three main advantages: 
+    </p>
+
+    <ul>
+        <li>
+            HD maps are typically composed of a mixture of different geometries, such as points, lines, curves, and polygons. Polyline is a flexible primitive that can represent these geometries effectively. 
+        </li>
+        <li>
+            The order of polyline vertices is a natural way to encode the direction information of map elements, which is vital for vehicle planning. 
+        </li>
+        <li>
+            The polyline representation has been widely employed by downstream autonomous driving modules, such as motion forecasting. 
+        </li>
+    </ul>
+
+<!-- <div class="logo" style="" align="center"> -->
+<figure>
+    <img style="width: 700pt;" src="images/overview_vmp.pdf">
+    <!-- <figcaption>The network architecture of VectorMapNet. The top row is the pipeline of VectorMapNet generating polylines from raw sensor inputs. The bottom row illustrates detailed structures and inference procedures of three primary components of VectorMapNet: BEV feature extractor, map element detector, and polyline generator.</figcaption> -->
+</figure>
+<p>
+    There are three key ingredients in our vector HD map generation pipeline, as shown in above figure.
+</p>
+<ul>
+    <li>
+        A BEV feature extractor that map sensor data from sensor-view to a canonical BEV representation\(\mathcal{F}_{\mathrm{BEV}}\).
+    </li> 
+    <li>
+        A scene-level map element detector that locates and classifies all map elements by predicting element keypoints \( \mathcal{A}=\{a_i\in\mathbb{R}^{k\times 2}|i=1,\dots,N\} \) and their class labels \( \mathcal{L} = \{l_i\in\mathbb{Z}|i=1,\dots,N\} \).
+    </li>
+    <li>
+        An object-level polyline generator that produces a polyline vertices sequence for each detected map element \((a_i, l_i)\).
+    </li>  
+</ul>
+    
+</div>
+
+
+<div class="section">
+    <div class="title" id="lang">Related Projects on <a href="https://tsinghua-mars-lab.github.io/vcad/">VCAD (Vision-Centric Autonomous Driving)</a></div>
+    <div class="col text-center">
+
+    <table width="100%" style="margin: 0pt 0pt; text-align: center;">
+    <tr>
+      <td>
+      BEV Mapping<br>
+      <a href="https://tsinghua-mars-lab.github.io/HDMapNet/" class="d-inline-block p-3"><img height="100"
+          src="images/hdmapnet_thumbnail.gif" style="border:1px solid" data-nothumb><br>HDMapNet</a>
+      </td>
+
+      <td>
+      BEV Detection<br>
+        <a href="https://tsinghua-mars-lab.github.io/detr3d/" class="d-inline-block p-3"><img height="100"
+          src="images/detr3d_thumbnail.png" style="border:1px solid"
+          data-nothumb><br>DETR3D</a>
+      </td>
+
+      <td>
+      BEV Fusion<br>
+        <a href="https://tsinghua-mars-lab.github.io/futr3d/" class="d-inline-block p-3"><img height="100"
+          src="images/futr3d_thumbnail.png" style="border:1px solid"
+          data-nothumb><br>FUTR3D</a>
+      </td>
+
+    </tr>
+
+    </table>
+    </div>
+
+    
+</div>
+
+<!-- === Reference Section Starts === -->
+<div class="section">
+    <div class="bibtex">
+       <div class="title" id="lang">Reference</div>
+    </div>
+<p>If you find our work useful in your research, please cite our paper:</p>
+<pre>
+    @article{liu2022vectormapnet,
+    title={VectorMapNet: End-to-end Vectorized HD Map Learning},
+    author={Liu, Yicheng and Wang, Yue and Wang, Yilun and Zhao, Hang},
+    <!-- journal={arXiv preprint arXiv:2205.00613}, -->
+    year={2022}
+    }
+</pre>
+    <!-- Adjust the frame size based on the demo (Every project differs). -->
+</div>
+
+</body>
+</html>

@@ -21,7 +21,7 @@ If you find our work useful in your research, please cite our paper:
 
     @inproceedings{liu2022vectormapnet,
         title={VectorMapNet: End-to-end Vectorized HD Map Learning},
-        author={Liu, Yicheng and Yuantian, Yuan and Wang, Yue and Wang, Yilun and Zhao, Hang},
+        author={Liu, Yicheng and Tianyuan, Yuan and Wang, Yue and Wang, Yilun and Zhao, Hang},
         booktitle={International conference on machine learning},
         year={2023},
         organization={PMLR}
